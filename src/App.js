@@ -1,45 +1,56 @@
 import React from 'react';
 import TodoList from './components/TodoList';
+import './App.css';
 
 class App extends React.Component {
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
   state = {
-    list: [
-      {
-        task: 'Organize Garage',
-        id: 1528817077286,
-        completed: false
-      },
-      {
-        task: 'Bake Cookies',
-        id: 1528817084358,
-        completed: true
-      }
-    ]
+    list: []
+  }
+
+  componentDidMount() {
+    if(!localStorage.getItem('list')) {
+      localStorage.setItem('list', JSON.stringify({
+        list: [
+          {
+            task: 'Organize Garage',
+            id: 1528817077286,
+            completed: false
+          },
+          {
+            task: 'Bake Cookies',
+            id: 1528817084358,
+            completed: true
+          }
+        ]
+      }));
+    }
+
+    this.setState(JSON.parse(localStorage.getItem('list')))
   }
 
   onFormSubmit = (todo) => {
-    this.setState({ list: [ ...this.state.list,  todo] })
+    const newList = { list: [...this.state.list, todo] };
+    this.setState(newList);
+    localStorage.setItem('list', JSON.stringify(newList));
   }
 
   onClear = (e) => {
     e.preventDefault();
-    this.setState({ list: this.state.list.filter(item => !item.completed )});
+    const newList = { list: this.state.list.filter(item => !item.completed) };
+    this.setState(newList);
+    localStorage.setItem('list', JSON.stringify(newList));
   }
 
   onClick = (index) => {
     const newList = [...this.state.list];
     newList.splice(index, 1, { ...this.state.list[index], completed: !this.state.list[index].completed });
-
     this.setState({ list: newList });
+    localStorage.setItem('list', JSON.stringify({ list: newList }));
   }
 
   render() {
-    console.log(this.state.list)
     return (
-      <div>
+      <div className="container ">
         <h2>Todo List</h2>
         <TodoList onClick={this.onClick} onSubmit={this.onFormSubmit} onClear={this.onClear} list={this.state.list} />
       </div>

@@ -6,10 +6,12 @@ class TodoList extends React.Component {
   render() {
     return (
       <>
-        {this.props.list.map((item, index) => <Todo index={index} onClick={this.props.onClick} key={item.id} data={item} />)}
+        <div className="list">
+          {this.props.list.map((item, index) => <Todo index={index} onClick={this.props.onClick} key={item.id} data={item} />)}
+        </div>
         <TodoForm 
           onSubmit={this.props.onSubmit}
-          onClear={this.props.onClear} 
+          onClear={this.props.onClear}
         />
       </>
     );
