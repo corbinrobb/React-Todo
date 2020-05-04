@@ -5,8 +5,8 @@ class Todo extends React.Component {
     const styles = { textDecoration: (this.props.data.completed) ? 'line-through' : 'none' };
 
     return (
-      <div className="item">
-        <p onClick={() => this.props.onClick(this.props.index)} style={styles}>{this.props.data.task}</p>
+      <div className="item" onClick={() => this.props.onClick(this.props.index)}>
+        <p style={styles}>{this.props.data.task}</p>
       </div>
     );
   }

@@ -7,7 +7,9 @@ class TodoList extends React.Component {
     return (
       <>
         <div className="list">
-          {this.props.list.map((item, index) => <Todo index={index} onClick={this.props.onClick} key={item.id} data={item} />)}
+          {this.props.list
+            .filter(item => item.task.toLowerCase().includes(this.props.term.toLowerCase()))
+            .map((item, index) => <Todo index={index} onClick={this.props.onClick} key={item.id} data={item} />)}
         </div>
         <TodoForm 
           onSubmit={this.props.onSubmit}

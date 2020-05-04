@@ -1,10 +1,12 @@
 import React from 'react';
 import TodoList from './components/TodoList';
+import SearchForm from './components/SearchForm';
 import './App.css';
 
 class App extends React.Component {
   state = {
-    list: []
+    list: [],
+    term: ''
   }
 
   componentDidMount() {
@@ -48,11 +50,16 @@ class App extends React.Component {
     localStorage.setItem('list', JSON.stringify({ list: newList }));
   }
 
+  onSearchChange = e => {
+    this.setState({ term: e.target.value })
+  }
+
   render() {
     return (
       <div className="container ">
+        <SearchForm term={this.state.term} onSearchChange={this.onSearchChange} />
         <h2>Todo List</h2>
-        <TodoList onClick={this.onClick} onSubmit={this.onFormSubmit} onClear={this.onClear} list={this.state.list} />
+        <TodoList term={this.state.term} onClick={this.onClick} onSubmit={this.onFormSubmit} onClear={this.onClear} list={this.state.list} />
       </div>
     );
   }

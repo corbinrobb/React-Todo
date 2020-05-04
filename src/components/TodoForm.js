@@ -8,7 +8,7 @@ class TodoForm extends React.Component {
   }
 
   onChange = (e) => {
-    this.setState({ ...this.state, task: e.target.value })
+    this.setState({ task: e.target.value })
   }
 
   onSubmit = (e) => {
